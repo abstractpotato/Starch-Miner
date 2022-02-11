@@ -287,6 +287,12 @@
         running = false;
         location.reload();
       } else {
+        let style = "box-shadow: 0px 0px 0px #000000;  color: white; background-color: black; border: solid white 1px;";
+        document.getElementById("syncBtn").disabled = true;
+        document.getElementById("redeemBtn").disabled = true;
+        document.getElementById("syncBtn").style = style;
+        document.getElementById("redeemBtn").style = style;
+        document.getElementById("startBtn").style = "color: black; border: solid rgba(255,206,16,1) 1px; background-color: rgba(255,206,16,1);"
         running = true;
         mine();
       }
