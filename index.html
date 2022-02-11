@@ -1,3 +1,100 @@
 <html>
-<h1>Home Page</h1>
+  <style>
+  *{
+    margin: 0px;
+    padding: 0px;
+    font-family: monospace;
+  }
+  html {
+    background-color: black;
+    color: white;
+  }
+  #head {
+    text-align: left;
+    background-image: url(https://bafybeiemica2zza6suhxhntxto6tjutv4sgjz2vfygcvvtsa7h6sveqluu.ipfs.dweb.link/?preview=1);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 20px;
+    font-size: 2vh;
+  }
+  #head #item {
+    font-size: 2.5vh;
+    color: rgba(255,206,16,1);
+    margin-right: 15px;
+    text-decoration: none;
+  }
+  #container {
+    height: 80%;
+    width: 100%;
+    position: relative;
+  }
+  #box {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+  #foot {
+    text-align: center;
+  }
+  #foot #item {
+    margin: 50px;
+    font-size: 2vh;
+    color: rgba(255,206,16,1);
+    text-decoration: none;
+  }
+  h2 {
+    font-size: 3vh;
+  }
+  p {
+    font-size: 2vh;
+  }
+  </style>
+  <div id="head">
+    <h1>Starch Industries Miner</h1>
+    <div>
+      <a id="item" href="http://starch.one">Home</a>
+      <a id="item" href="http://starch.one/miner">Miner</a>
+      <a id="item" href="http://starch.one/about">About</a>
+    </div>
+  </div>
+  <div id="container">
+    <div id="box">
+      <h2>Starch-Chain Status</h2>
+      <p id="progess">Loading...</p>
+      <p id="blocks">Loading...</p>
+      <p id="halving">Loading...</p>
+      <p id="rewards">Loading...</p>
+    </div>
+  </div>
+  <div id="foot">
+    <a id="item" href="https://abstractpotato.com">Starch Industries</a> | <a id="item" href="https://twitter.com/abstractpotato">Asbtract Potato</a>
+  </div>
+  <script>
+  const host = "http://starch.one/";
+  const progess = document.getElementById("progess");
+  const blocks = document.getElementById("blocks");
+  const halving = document.getElementById("halving");
+  const rewards = document.getElementById("rewards");
+
+    function startLiveUpdate () {
+      setInterval(function () {
+        fetch(host + 'info').then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          let b = Math.round((data.blocks / 215000) * 100);
+          progess.textContent = "Progress: " + b + "%";
+          blocks.textContent = "Blocks Mined: " + data.blocks + "/215,000 \n";
+          halving.textContent = "Halving: " + data.halving;
+          rewards.textContent = "Rewards per Block: " + data.rewards + " STRCH";
+        }).catch(function (error){
+          print_error(error);
+        });
+      }, 1000);
+    }
+    document.addEventListener('DOMContentLoaded', startLiveUpdate());
+  </script>
 </html>
+
