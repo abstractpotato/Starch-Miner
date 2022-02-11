@@ -129,7 +129,7 @@
     const miner_id = page.split("miner=")[1];
 
     let running = false;
-    let host = "http://localhost/";
+    let host = "http://starch.one/";
     const statusView = document.getElementById("statusView");
     const textView = document.getElementById("textView");
 
@@ -237,7 +237,7 @@
     }
 
     function send(msg) {
-      fetch(host + 'solved',
+      fetch(host + 'api/solved',
       {
         method: 'POST',
         headers: {'Content-Type' : 'application/json'
@@ -263,7 +263,7 @@
       function startLiveUpdate () {
         document.getElementById("startBtn").textContent = "Stop";
         setInterval(function () {
-          fetch(host + 'mine').then(function (response) {
+          fetch(host + 'api/mine').then(function (response) {
             return response.json();
           }).then(function (data) {
             statusView.textContent = "Mining...";
@@ -293,7 +293,7 @@
     }
 
     function status() {
-      fetch(host + 'status',
+      fetch(host + 'api/status',
       {
         method: 'POST',
         headers: {'Content-Type' : 'application/json'
@@ -310,7 +310,7 @@
     }
 
     function redeem() {
-      fetch(host + 'redeem',
+      fetch(host + 'api/redeem',
       {
         method: 'POST',
         headers: {'Content-Type' : 'application/json'
