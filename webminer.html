@@ -101,7 +101,6 @@
     <div id="head">
       <h1 style="font-size: 36px;">Starch Industries Starch Miner</h1>
       <p id="ver"><p>
-      <p id="host"></p>
     </div>
     <div id='input'>
       <div id="container">
@@ -133,8 +132,6 @@
     const statusView = document.getElementById("statusView");
     const textView = document.getElementById("textView");
 
-    //load
-    document.getElementById("host").textContent = "Host: " +  host;
     document.getElementById("ver").textContent = "Miner ID: " +  miner_id;
 
     function hex_to_int(hash) {
