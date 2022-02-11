@@ -79,7 +79,7 @@
   const halving = document.getElementById("halving");
   const rewards = document.getElementById("rewards");
 
-  fetch(host + 'info').then(function (response) {
+  fetch(host + 'api/info').then(function (response) {
     return response.json();
   }).then(function (data) {
     let b = Math.round((data.blocks / 215000) * 100);
