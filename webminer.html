@@ -10,6 +10,7 @@
       }
       html {
         background-color: black;
+        color: white;
       }
       #head {
         color: white;
@@ -17,29 +18,13 @@
         background-repeat: no-repeat;
         background-size: cover;
         padding: 20px;
+        font-size: 2vh;
       }
       #head #item {
         font-size: 2.5vh;
         color: rgba(255,206,16,1);
         margin-right: 15px;
         text-decoration: none;
-      }
-      #foot {
-        text-align: center;
-      }
-      .link {
-        background-color: black;
-        color: white;
-        padding: 10px;
-        margin-right: 10px;
-        margin-left: 10px;
-        font-size: 1.5vh;
-        border: 3px white solid;
-      }
-      .link:hover {
-        background-color: white;
-        color: black;
-        text-decoration: underline;
       }
       #input {
         color: black;
@@ -55,13 +40,8 @@
       #container {
         padding: 15px;
       }
-      h1 {
-        font-size: 3vh;
-      }
-      #ver {
-        font-size: 1.5vh;
-      }
-      #host{
+      #minerID {
+        color: white;
         font-size: 1.5vh;
       }
       input {
@@ -101,21 +81,31 @@
         width: 100%;
         height: 68%;
       }
+      #foot {
+        margin-top: 20px;
+        text-align: center;
+      }
+      #foot #item {
+        margin: 50px;
+        font-size: 2vh;
+        color: rgba(255,206,16,1);
+        text-decoration: none;
+      }
     </style>
   </head>
   <body>
     <div id="head">
-      <h1 style="font-size: 36px;">Starch Industries Miner</h1>
+      <h1>Starch Industries Miner</h1>
       <div>
         <a id="item" href="http://starch.one">Home</a>
         <a id="item" href="http://starch.one/miner">Miner</a>
         <a id="item" href="http://starch.one/about">About</a>
       </div>
-      <p id="ver"><p>
     </div>
     <div id='input'>
       <div id="container">
         <center>
+          <p id="minerID"><p>
           <button id="syncBtn" class="btn" type="button" onclick='status()'>Status</button>
           <button id="startBtn" class="btn" type="button" onclick='run()'>Start</button>
           <button id="redeemBtn" class="btn" type="button" onclick='redeem()'>Redeem</button>
@@ -129,9 +119,7 @@
       </div>
     </div>
     <div id="foot">
-      <a class="link" target="_blank" href="https://www.abstractpotato.com/starch-miner">How to Use</a>
-      <a class="link" target="_blank" href="https://twitter.com/abstractpotato">Abstract Potato</a>
-      <a class="link" target="_blank" href="https://abstractpotato.com">Starch Industries</a>
+      <a id="item" href="https://abstractpotato.com">Starch Industries</a> | <a id="item" href="https://twitter.com/abstractpotato">Asbtract Potato</a>
     </div>
   </body>
   <script>
@@ -143,7 +131,7 @@
     const statusView = document.getElementById("statusView");
     const textView = document.getElementById("textView");
 
-    document.getElementById("ver").textContent = "Miner ID: " +  miner_id;
+    document.getElementById("minerID").textContent = "Miner ID: " +  miner_id;
 
     function hex_to_int(hash) {
       return parseInt(hash, 16);
@@ -197,7 +185,7 @@
         for (j = 0; j < words[lengthProperty];) {
             var w = words.slice(j, j += 16); // The message is expanded into 64 words as part of the iteration
             var oldHash = hash;
-          
+
             hash = hash.slice(0, 8);
 
             for (i = 0; i < 64; i++) {
