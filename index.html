@@ -79,22 +79,16 @@
   const halving = document.getElementById("halving");
   const rewards = document.getElementById("rewards");
 
-    function startLiveUpdate () {
-      setInterval(function () {
-        fetch(host + 'info').then(function (response) {
-          return response.json();
-        }).then(function (data) {
-          let b = Math.round((data.blocks / 215000) * 100);
-          progess.textContent = "Progress: " + b + "%";
-          blocks.textContent = "Blocks Mined: " + data.blocks + "/215,000 \n";
-          halving.textContent = "Halving: " + data.halving;
-          rewards.textContent = "Rewards per Block: " + data.rewards + " STRCH";
-        }).catch(function (error){
-          print_error(error);
-        });
-      }, 1000);
-    }
-    document.addEventListener('DOMContentLoaded', startLiveUpdate());
+  fetch(host + 'info').then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    let b = Math.round((data.blocks / 215000) * 100);
+    progess.textContent = "Progress: " + b + "%";
+    blocks.textContent = "Blocks Mined: " + data.blocks + "/215,000 \n";
+    halving.textContent = "Halving: " + data.halving;
+    rewards.textContent = "Rewards per Block: " + data.rewards + " STRCH";
+  }).catch(function (error){
+    print_error(error);
+  });
   </script>
 </html>
-
