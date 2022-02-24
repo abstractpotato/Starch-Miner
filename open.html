@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Starch One - Open</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <style>
+    * {
+      font-family: "Oswald", sans-serif;
+      color: white;
+      padding: 0px;
+      margin: 0px;
+    }
+    html {
+      background-color: black;
+    }
+    .top-container {
+      background-image: url(https://bafybeiemica2zza6suhxhntxto6tjutv4sgjz2vfygcvvtsa7h6sveqluu.ipfs.dweb.link/?preview=1);
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding: 30px;
+      text-align: center;
+    }
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+    .sticky + .content {
+      padding-top: 102px;
+    }
+    #menu #item {
+      text-decoration: none;
+      font-size: 2.5vh;
+      box-sizing: border-box;
+      width: 33.33%;
+      border: solid black 10px;
+      color: black;
+      padding: 10px;
+      text-align: center;
+      float: left;
+      background-color: rgba(255,206,16,1);
+    }
+    #item:hover {
+      color: rgba(255,206,16,1);
+      background-color: black;
+    }
+    #content {
+      font-size: 2.5vh;
+      background-color: black;
+    }
+    #box {
+      padding-top: 12%;
+      padding-bottom: 10%;
+    }
+    #box h2 {
+      text-align: center;
+      margin-top: 100px;
+    }
+    #startBtn {
+      margin-top: 10px;
+      font-size: 5vh;
+      color: black;
+      background-color: rgba(255,206,16,1);
+      border: solid white 5px;
+      padding: 4px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 5px;
+    }
+    #startBtn:hover {
+      background-color: black;
+      color: white;
+    }
+    #content h2 {
+      margin-top: 10px;
+    }
+    #content p {
+      font-family: monospace;
+      margin-top: 10px;
+    }
+    table {
+      width: 60%;
+    }
+    td {
+      border-bottom: 1px solid gray;
+    }
+    .info {
+      text-align: right;
+    }
+    .redeem {
+      border-top: 1px solid white;
+      margin: 20px;
+    }
+    input {
+      margin-top: 10px;
+      font-size: 2.5vh;
+      font-family: monospace;
+      text-align: center;
+      width: 100px;
+      color: black;
+      padding: 5px;
+    }
+    #foot {
+      border-top: 1px solid white;
+      margin: 20px;
+      padding: 20px;
+    }
+    #foot #item {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    button {
+      color: black;
+      margin-top: 2vh;
+      width: 10vh;
+      font-size: 2vh;
+      margin-left: 10px;
+      padding: 5px;
+      border: solid rgba(255,206,16,1) 1px;
+      background-color: rgba(255,206,16,1);
+    }
+    button:hover {
+      box-shadow: 0px 0px 0px #000000;
+      color: white;
+      background-color: black;
+      border: solid white 1px;
+    }
+    </style>
+  </head>
+  <body>
+  <div class="top-container">
+    <h1>Starch Miner</h1>
+    <p>First Native Token Miner on Cardano</p>
+  </div>
+  <div class="header" id="head">
+    <div id='menu'>
+      <a id="item" href="http://starch.one">Home</a>
+      <a id="item" href="http://starch.one/open">Miner</a>
+      <a id="item" href="http://starch.one/buy">Buy</a>
+    </div>
+  </div>
+  <div id='content'>
+    <center>
+      <div id='box'>
+        <h2>Enter your Miner ID</h2>
+        <input id='minerID' type="text"></input>
+        <button class="btn" type="button" onclick='redirect()'>GO</button>
+      </div>
+      <div id="foot">
+        <a id="item" href="https://abstractpotato.com">Starch Industries</a> | <a id="item" href="https://twitter.com/abstractpotato">Asbtract Potato</a>
+      </div>
+    </center>
+  </div>
+  <script>
+  window.onscroll = function() {myFunction()};
+  var header = document.getElementById("head");
+  var sticky = header.offsetTop;
+  function myFunction() {
+    if (window.pageYOffset > sticky) {
+      header.classList.add("sticky");
+    } else {
+      header.classList.remove("sticky");
+    }
+  }
+
+  let host = "http://starch.one/";
+
+  function redirect() {
+    let miner_id = document.getElementById("minerID");
+    fetch(host + 'api/status',
+    {
+      method: 'POST',
+      headers: {'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({minerID: miner_id.value})
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      if (data.amount >= 0) {
+        window.location.href = "http://starch.one/miner?miner=" + minerID.value;
+      } else {
+        alert("Miner ID not found, make sure you are using a valid Miner ID" + data.amount);
+      }
+    }).catch(function (error) {
+      print_error(error);
+    });
+  }
+  </script>
+  </body>
+</html>
