@@ -180,7 +180,7 @@
       if (data.amount >= 0) {
         window.location.href = "http://starch.one/miner?miner=" + minerID.value;
       } else {
-        alert("Miner ID not found, make sure you are using a valid Miner ID" + data.amount);
+        alert("Miner ID not found, make sure you are using a valid Miner ID");
       }
     }).catch(function (error) {
       print_error(error);
