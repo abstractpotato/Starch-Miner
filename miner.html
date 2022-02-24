@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <style>
+    * {
+      font-family: "Oswald", sans-serif;
+      color: white;
+      padding: 0px;
+      margin: 0px;
+    }
+    html {
+      background-color: black;
+    }
+    .top-container {
+      background-image: url(https://bafybeiemica2zza6suhxhntxto6tjutv4sgjz2vfygcvvtsa7h6sveqluu.ipfs.dweb.link/?preview=1);
+      padding: 30px;
+      text-align: center;
+    }
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+    .sticky + .content {
+      padding-top: 102px;
+    }
+    #menu #item {
+      text-decoration: none;
+      font-size: 2.5vh;
+      box-sizing: border-box;
+      width: 33.33%;
+      border: solid black 10px;
+      color: black;
+      padding: 10px;
+      text-align: center;
+      float: left;
+      background-color: rgba(255,206,16,1);
+    }
+    #item:hover {
+      color: rgba(255,206,16,1);
+      background-color: black;
+    }
+    #content {
+      font-size: 2.5vh;
+      background-color: black;
+    }
+    #container {
+      height: 80%;
+      width: 100%;
+      position: relative;
+    }
+    #box {
+      margin: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -ms-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+    }
+    #startBtn {
+      margin-top: 10px;
+      font-size: 5vh;
+      color: black;
+      background-color: rgba(255,206,16,1);
+      border: solid white 5px;
+      padding: 4px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border-radius: 5px;
+    }
+    #startBtn:hover {
+      background-color: black;
+      color: white;
+    }
+    #content h2 {
+      margin-top: 10px;
+    }
+    #content p {
+      font-family: monospace;
+      margin-top: 10px;
+    }
+    table {
+      width: 50%;
+    }
+    td {
+      border-bottom: 1px solid gray;
+    }
+    .info {
+      text-align: right;
+    }
+    .redeem {
+      border-top: 1px solid white;
+      margin: 20px;
+    }
+    input {
+      margin-top: 10px;
+      font-size: 2.5vh;
+      font-family: monospace;
+      text-align: center;
+      width: 60%;
+      color: black;
+      padding: 5px;
+    }
+    #foot {
+      border-top: 1px solid white;
+      margin: 20px;
+      padding: 20px;
+    }
+    #foot #item {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    </style>
+  </head>
+  <body>
+  <div class="top-container">
+    <h1>Starch Miner</h1>
+    <p>First Native Token Miner on Cardano</p>
+  </div>
+  <div class="header" id="head">
+    <div id='menu'>
+      <a id="item" href="http://starch.one">Home</a>
+      <a id="item" href="http://starch.one/open">Miner</a>
+      <a id="item" href="http://starch.one/buy">Buy</a>
+    </div>
+  </div>
+  <div id='content'>
+    <center>
+      <table>
+        <tr>
+          <td>Miner ID</td>
+          <td id='minerID' class='info'>00000000</td>
+        </tr>
+        <tr>
+          <td>Balance</td>
+          <td id='starch' class='info'>0 STRCH</td>
+        </tr>
+        <tr>
+          <td>Total Blocks</td>
+          <td id='blocks' class='info'>0</td>
+        </tr>
+        <tr>
+          <td>Difficulty</td>
+          <td id='difficulty' class='info'>0</td>
+        </tr>
+        <tr>
+          <td>Hash Rate</td>
+          <td id='hashRate' class='info'>0</td>
+        </tr>
+      </table>
+      <p id='runtime'>Runtime: 00:00:00 | New Blocks : 0</p>
+      <button id="startBtn" class="btn" type="button" onclick='run()'>Start</button>
+      <div class='redeem'>
+        <h2>Redeem Starch</h2>
+        <p style="color: rgba(255,206,16,1);">Make sure this Miner ID Token is in the wallet you use to send the transaction</p>
+        <p id='redeemMsg'>Send 6 ADA to redeem 5000 STRCH:</p>
+        <input type='text' value="addr1q959x2ggfgxwlys0j0p7jz6wgeapzyqn4e8lf6gju30frp74yeq7e4ktcrylvhck77sl4n9jfzt0jqh4wkysjy0gggmsp4x57t"></input>
+      </div>
+      <div id="foot">
+        <a id="item" href="https://abstractpotato.com">Starch Industries</a> | <a id="item" href="https://twitter.com/abstractpotato">Asbtract Potato</a>
+      </div>
+    </center>
+  </div>
+    <script>
+    window.onscroll = function() {myFunction()};
+    var header = document.getElementById("head");
+    var sticky = header.offsetTop;
+    function myFunction() {
+      if (window.pageYOffset > sticky) {
+        header.classList.add("sticky");
+      } else {
+        header.classList.remove("sticky");
+      }
+    }
+
+    const host = "http://starch.one/";
+    const page = window.location.href;
+    const miner_id = page.split("miner=")[1];
+    document.getElementById("minerID").innerHTML = miner_id;
+
+    if (typeof miner_id == 'undefined') {
+      window.location.href = host + "open";
+    }
+
+    const balance = document.getElementById('starch');
+    const block = document.getElementById('blocks');
+    const hashRate = document.getElementById('hashRate');
+    const runtime = document.getElementById("runtime");
+    const redeemMsg = document.getElementById("redeemMsg");
+    const difficulty = document.getElementById("difficulty");
+
+    let seconds = 0;
+    let minutes = 0;
+    let hours = 0;
+    let days = 0;
+
+
+    let validMiner = false;
+    let running = false;
+    let blockCount = 0;
+    let hashCount = 0;
+
+    function status() {
+      fetch(host + 'api/status',
+      {
+        method: 'POST',
+        headers: {'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({minerID: miner_id})
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.amount >= 0) {
+          balance.innerHTML = data.amount
+          blocks.innerHTML = data.blocks
+          difficulty.innerHTML = data.difficulty;
+          validMiner = true;
+        } else {
+          minerID.innerHTML = "Miner ID Not Found!";
+        }
+      }).catch(function (error) {
+        print_error(error);
+      });
+    }
+
+    function startLiveUpdate () {
+      setInterval(function () {
+        status();
+      }, 1000);
+    }
+
+    function hex_to_int(hash) {
+      return parseInt(hash, 16);
+    }
+
+    function randomColor() {
+       let color = '#';
+       for (let i = 0; i < 6; i++) {
+          let random = Math.random();
+          let bit = (random * 16) | 0;
+          color += (bit).toString(16);
+       }
+       return color;
+    }
+
+    function sha256(ascii) {
+        function rightRotate(value, amount) {
+            return (value>>>amount) | (value<<(32 - amount));
+        };
+        var mathPow = Math.pow;
+        var maxWord = mathPow(2, 32);
+        var lengthProperty = 'length'
+        var i, j; // Used as a counter across the whole file
+        var result = ''
+        var words = [];
+        var asciiBitLength = ascii[lengthProperty]*8;
+        var hash = sha256.h = sha256.h || [];
+        var k = sha256.k = sha256.k || [];
+        var primeCounter = k[lengthProperty];
+        var isComposite = {};
+        for (var candidate = 2; primeCounter < 64; candidate++) {
+            if (!isComposite[candidate]) {
+                for (i = 0; i < 313; i += candidate) {
+                    isComposite[i] = candidate;
+                }
+                hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+                k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+            }
+        }
+
+        ascii += '\x80' // Append Ƈ' bit (plus zero padding)
+        while (ascii[lengthProperty]%64 - 56) ascii += '\x00' // More zero padding
+        for (i = 0; i < ascii[lengthProperty]; i++) {
+            j = ascii.charCodeAt(i);
+            if (j>>8) return; // ASCII check: only accept characters in range 0-255
+            words[i>>2] |= j << ((3 - i)%4)*8;
+        }
+        words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+        words[words[lengthProperty]] = (asciiBitLength)
+
+        for (j = 0; j < words[lengthProperty];) {
+            var w = words.slice(j, j += 16); // The message is expanded into 64 words as part of the iteration
+            var oldHash = hash;
+
+            hash = hash.slice(0, 8);
+
+            for (i = 0; i < 64; i++) {
+                var i2 = i + j;
+                var w15 = w[i - 15], w2 = w[i - 2];
+
+                var a = hash[0], e = hash[4];
+                var temp1 = hash[7]
+                    + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) // S1
+                    + ((e&hash[5])^((~e)&hash[6])) // ch
+                    + k[i]
+                    + (w[i] = (i < 16) ? w[i] : (
+                            w[i - 16]
+                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3)) // s0
+                            + w[i - 7]
+                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10)) // s1
+                        )|0
+                    );
+                var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) // S0
+                    + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2])); // maj
+
+                hash = [(temp1 + temp2)|0].concat(hash); // We don't bother trimming off the extra ones, they're harmless as long as we're truncating when we do the slice()
+                hash[4] = (hash[4] + temp1)|0;
+            }
+
+            for (i = 0; i < 8; i++) {
+                hash[i] = (hash[i] + oldHash[i])|0;
+            }
+        }
+
+        for (i = 0; i < 8; i++) {
+            for (j = 3; j + 1; j--) {
+                var b = (hash[i]>>(j*8))&255;
+                result += ((b < 16) ? 0 : '') + b.toString(16);
+            }
+        }
+        return result;
+    };
+
+    function solve(hash, max) {
+      color = randomColor();
+      str = hash + " " + miner_id + " " + color;
+      new_hash = sha256(str);
+      hashCount += 1;
+      return ({newHash: new_hash, color: color, minerID: miner_id});
+    }
+
+    function send(msg) {
+      fetch(host + 'api/solved',
+      {
+        method: 'POST',
+        headers: {'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify(msg)
+      }).then(function (response) {
+        return response.json();
+      }).then(function (data) {
+        if (data.success == "True") {
+          blockCount += 1;
+        }
+      }).catch(function (error) {
+        console.error(error);
+      });
+    }
+
+    function mine() {
+      function startMining () {
+        document.getElementById("startBtn").textContent = "Stop";
+        setInterval(function () {
+          fetch(host + 'api/mine').then(function (response) {
+            return response.json();
+          }).then(function (data) {
+            do {
+              temp = solve(data.last_hash, data.reward, data.max);
+            } while (hex_to_int(temp.newHash) > data.max);
+            send(temp);
+          }).catch(function (error){
+            print_error(error);
+          });
+        }, 1000);
+      }
+      document.addEventListener('DOMContentLoaded', startMining());
+    }
+
+    function startTimer () {
+      setInterval(function () {
+        hashRate.innerHTML = hashCount;
+        hashCount = 0;
+
+        seconds += 1;
+
+        if (seconds == 60) {
+          minutes += 1;
+          seconds = 0;
+        }
+        if (minutes == 60) {
+          hours += 1;
+          minutes = 0;
+        }
+        if (hours == 24) {
+          days += 1;
+          hours = 0;
+        }
+
+        let msg = "Runtime: ";
+
+        if (days > 0) {
+          msg += "Days " + days + ",";
+        }
+        if (hours < 10) {
+          msg += " 0" + hours;
+        } else {
+          msg += " " + hours;
+        }
+        if (minutes < 10) {
+          msg += ":0" + minutes;
+        } else {
+          msg += ":" + minutes;
+        }
+        if (seconds < 10) {
+          msg += ":0" + seconds;
+        } else {
+          msg += ":" + seconds;
+        }
+        runtime.innerHTML = msg + " | New Blocks: " + blockCount;
+      }, 1000);
+    }
+
+    function run() {
+      if (running) {
+        running = false;
+        location.reload();
+      } else {
+        if (validMiner) {
+          document.getElementById("startBtn").innerHTML = 'Stop';
+          running = true;
+          startTimer();
+          mine();
+        } else {
+          alert("Miner ID not found! \nMake sure this Miner ID is activated before mining.")
+        }
+
+      }
+    }
+
+    status();
+    startLiveUpdate();
+    </script>
+
+  </body>
+</html>
