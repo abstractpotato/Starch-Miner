@@ -173,12 +173,12 @@
       method: 'POST',
       headers: {'Content-Type' : 'application/json'
       },
-      body: JSON.stringify({minerID: miner_id.value})
+      body: JSON.stringify({minerID: miner_id.value.toUpperCase()})
     }).then(function (response) {
       return response.json();
     }).then(function (data) {
       if (data.amount >= 0) {
-        window.location.href = "http://starch.one/miner?miner=" + minerID.value;
+        window.location.href = "http://starch.one/miner?miner=" + minerID.value.toUpperCase();
       } else {
         alert("Miner ID not found, make sure you are using a valid Miner ID");
       }
