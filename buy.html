@@ -1,92 +1,181 @@
+<!DOCTYPE html>
 <html>
-<title>Open Miner</title>
-<center>
-  <style>
-  *{
-    margin: 0px;
-    padding: 0px;
-    font-family: monospace;
-  }
-  html {
-    background-color: black;
-    color: white;
-  }
-  #head {
-    text-align: left;
-    background-image: url(https://bafybeiemica2zza6suhxhntxto6tjutv4sgjz2vfygcvvtsa7h6sveqluu.ipfs.dweb.link/?preview=1);
-    background-repeat: no-repeat;
-    background-size: cover;
-    padding: 20px;
-    font-size: 2vh;
-  }
-  #item {
-    font-size: 2.5vh;
-    color: rgba(255,206,16,1);
-    margin-right: 15px;
-    text-decoration: none;
-  }
-  h2 {
-    font-size: 3vh;
-  }
-  #container {
-    height: 80%;
-    width: 100%;
-    position: relative;
-  }
-  #box {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
-  input {
-    margin-top: 25px;
-    width: 40vh;
-    font-size: 2vh;
-    padding: 5px;
-  }
-  button {
-    margin-top: 2vh;
-    width: 10vh;
-    font-size: 2vh;
-    margin-left: 10px;
-    padding: 5px;
-    border: solid rgba(255,206,16,1) 1px;
-    background-color: rgba(255,206,16,1);
-  }
-  button:hover {
-    box-shadow: 0px 0px 0px #000000;
-    color: white;
-    background-color: black;
-    border: solid white 1px;
-  }
-  #foot {
-    text-align: center;
-  }
-  #foot #item {
-    margin: 50px;
-    font-size: 2vh;
-    color: rgba(255,206,16,1);
-    text-decoration: none;
-  }
-  </style>
-  <div id="head">
-    <h1>Starch Industries Miner</h1>
-    <div>
+  <head>
+    <title>Starch One - Buy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <style>
+    * {
+      font-family: "Oswald", sans-serif;
+      color: white;
+      padding: 0px;
+      margin: 0px;
+    }
+    html {
+      background-color: black;
+    }
+    .top-container {
+      background-image: url(https://bafybeiemica2zza6suhxhntxto6tjutv4sgjz2vfygcvvtsa7h6sveqluu.ipfs.dweb.link/?preview=1);
+      background-repeat: no-repeat;
+      background-size: cover;
+      padding: 30px;
+      text-align: center;
+    }
+    .sticky {
+      position: fixed;
+      top: 0;
+      width: 100%;
+    }
+    .sticky + .content {
+      padding-top: 102px;
+    }
+    #menu #item {
+      text-decoration: none;
+      font-size: 2.5vh;
+      box-sizing: border-box;
+      width: 33.33%;
+      border: solid black 10px;
+      color: black;
+      padding: 10px;
+      text-align: center;
+      float: left;
+      background-color: rgba(255,206,16,1);
+    }
+    #item:hover {
+      color: rgba(255,206,16,1);
+      background-color: black;
+    }
+    #content {
+      font-size: 2.5vh;
+      background-color: black;
+    }
+    #box {
+      padding-top: 100px;
+      padding-bottom: 50px;
+    }
+    #box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    #box p {
+      margin-bottom: 10px;
+    }
+    #content h2 {
+      margin-top: 10px;
+    }
+    #content p {
+      font-family: monospace;
+      margin-top: 10px;
+    }
+    .info {
+      text-align: right;
+    }
+    #anim {
+      background-image: url(https://gateway.pinata.cloud/ipfs/QmdVQDTHAWjHEiGmqFoPKic1qP4U2sDHXHezRNbBJaabHL);
+      height: 30vh;
+      width: 30vh;
+      background-repeat: no-repeat;
+      background-size: 30vh 30vh;
+    }
+    #skip {
+      color: black;
+      width: 30vh;
+      margin-top: 20px;
+      padding: 8px;
+      font-size: 2.5vh;
+    }
+    #foot {
+      border-top: 1px solid white;
+      margin: 20px;
+      padding: 20px;
+    }
+    #foot #item {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+    #prices{
+      padding: 15px;
+      margin: 20px;
+    }
+    input {
+      margin-top: 10px;
+      font-size: 2.5vh;
+      font-family: monospace;
+      text-align: center;
+      width: 60%;
+      color: black;
+      padding: 5px;
+    }
+    </style>
+  </head>
+  <body>
+  <div class="top-container">
+    <h1>Starch Miner</h1>
+    <p>First Native Token Miner on Cardano</p>
+  </div>
+  <div class="header" id="head">
+    <div id='menu'>
       <a id="item" href="http://starch.one">Home</a>
-      <a id="item" href="http://starch.one/miner">Miner</a>
-      <a id="item" href="http://starch.one/about">Discord</a>
+      <a id="item" href="http://starch.one/open">Miner</a>
       <a id="item" href="http://starch.one/buy">Buy</a>
     </div>
   </div>
-  <div id="container">
-    <div id="box">
-      <h2>Launch Date Coming Soon!</h2>
-    </div>
+  <div id='content'>
+    <center>
+      <div id='box'>
+        <h2>Mine to Buy!</h2>
+        <p>Tap to mine the potato!</p>
+        <center>
+          <img id="anim" onclick='mine();'></img>
+        </center>
+        <button id="skip" onclick="change();">Skip</button>
+      </div>
+      <div id="foot">
+        <a id="item" href="https://abstractpotato.com">Starch Industries</a> | <a id="item" href="https://twitter.com/abstractpotato">Asbtract Potato</a>
+      </div>
+    </center>
   </div>
-  <div id="foot">
-    <a id="item" href="https://abstractpotato.com">Starch Industries</a> | <a id="item" href="https://twitter.com/abstractpotato">Asbtract Potato</a>
-  </div>
+  <script>
+  window.onscroll = function() {myFunction()};
+  var header = document.getElementById("head");
+  var sticky = header.offsetTop;
+  function myFunction() {
+    if (window.pageYOffset > sticky) {
+      header.classList.add("sticky");
+    } else {
+      header.classList.remove("sticky");
+    }
+  }
+
+  const host = "http://starch.one/";
+  const potato = document.getElementById("anim")
+  const box = document.getElementById("box")
+  let c = 0;
+
+  function change(){
+    potato.remove();
+    box.innerHTML = "<h2>15₳ Each NFT</h2> <h3>Max 5 per Tx</h3>";
+    box.innerHTML += "<div id='prices'> <p>15₳ for 1 Miner NFT</p> <p>30₳ for 2 Miner NFTs</p> <p>45₳ for 3 Miner NFTs</p> <p>60₳ for 4 Miner NFTs</p> <p>75₳ for 5 Miner NFTs</p> </div> <p style='color: red;'>Do not send from an exchange</p>";
+    box.innerHTML += "<input type='text' value='addr1q9255tqt8y26svralf7dxmrmncwents6knfxf42zt7gu3whtkkzdzmmdxxdte9xr3ne4cvj20h5dc6hrzzpp0s4dra5qcc4x3y'> </input>";
+  }
+
+  function mine() {
+    if (c == 10) {
+      change();
+    } else {
+      c += 1;
+      if (c % 2) {
+        potato.style = "background-image: url(https://gateway.pinata.cloud/ipfs/Qmb1sHLPaBpbAcATfZjc7oKdLewyx2BTmCXsSDGT1eFB3W);";
+      } else {
+        potato.style = "background-image: url(https://gateway.pinata.cloud/ipfs/QmdVQDTHAWjHEiGmqFoPKic1qP4U2sDHXHezRNbBJaabHL);";
+      }
+    }
+  }
+
+  function copyAddr() {
+    navigator.clipboard.writeText("ADDR");
+    alert("Copied Address!");
+  }
+  </script>
+  </body>
 </html>
