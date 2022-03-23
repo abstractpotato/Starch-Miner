@@ -1,2 +1,2 @@
-# temp
-This is a simple flask server used to test server connections
+# Starch Industries - Starch Miner
+Open Source Web Version of the Starch miner found in http://starch.one
