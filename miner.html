@@ -238,7 +238,7 @@
       }).then(function (data) {
         if (data.amount >= 0) {
           balance.innerHTML = intToString(data.amount * 1000000);
-          blocks.innerHTML = data.blocks
+          blocks.innerHTML = intToString(data.blocks);
           difficulty.innerHTML = data.difficulty;
           redeemMsg.innerHTML = "Send 6 ADA to redeem " + intToString(data.amount * 1000000) + " STRCH";
           validMiner = true;
