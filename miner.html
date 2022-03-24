@@ -203,6 +203,28 @@
     let running = false;
     let blockCount = 0;
     let hashCount = 0;
+      
+    function intToString(num) {
+      num = num.toString().replace(/[^0-9.]/g, '');
+      if (num < 1000) {
+        return num;
+      }
+      let si = [
+        {v: 1E3, s: "K"},
+        {v: 1E6, s: "M"},
+        {v: 1E9, s: "B"},
+        {v: 1E12, s: "T"},
+        {v: 1E15, s: "P"},
+        {v: 1E18, s: "E"}
+      ];
+      let index;
+      for (index = si.length - 1; index > 0; index--) {
+        if (num >= si[index].v) {
+          break;
+        }
+      }
+      return (num / si[index].v).toFixed(2).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s;
+    }
 
     function status() {
       fetch(host + 'api/status',
@@ -215,10 +237,10 @@
         return response.json();
       }).then(function (data) {
         if (data.amount >= 0) {
-          balance.innerHTML = data.amount
+          balance.innerHTML = intToString(data.amount * 1000000);
           blocks.innerHTML = data.blocks
           difficulty.innerHTML = data.difficulty;
-          redeemMsg.innerHTML = "Send 6 ADA to redeem " + data.amount + " STRCH";
+          redeemMsg.innerHTML = "Send 6 ADA to redeem " + intToString(data.amount * 1000000) + " STRCH";
           validMiner = true;
         } else {
           minerID.innerHTML = "Miner ID Not Found!";
