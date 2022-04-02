@@ -145,6 +145,10 @@
             <td>Rewards</td>
             <td id='rewards' class='info'>Loading...</td>
           </tr>
+          <tr>
+            <td>Online</td>
+            <td id='miners' class='info'>Loading...</td>
+          </tr>
         </table>
       </div>
       <div id="foot">
@@ -163,7 +167,7 @@
       header.classList.remove("sticky");
     }
   }
-    
+
   function intToString(num) {
       num = num.toString().replace(/[^0-9.]/g, '');
       if (num < 1000) {
@@ -191,6 +195,7 @@
   const blocks = document.getElementById("blocks");
   const difficulty = document.getElementById("difficulty");
   const rewards = document.getElementById("rewards");
+  const miners = document.getElementById("miners");
 
   fetch(host + 'api/info').then(function (response) {
     return response.json();
@@ -200,6 +205,7 @@
     blocks.textContent = intToString(data.blocks) + "/215K \n";
     difficulty.textContent = data.difficulty;
     rewards.textContent = intToString(data.rewards * 1000000) + " STRCH";
+    miners.textContent = data.miners;
   }).catch(function (error){
     print_error(error);
   });
