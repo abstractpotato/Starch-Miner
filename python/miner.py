@@ -1,3 +1,4 @@
+import os
 import random
 import requests
 import json
@@ -53,28 +54,41 @@ def solve(last_hash, minerID, max_value):
 
 
 def mine(minerID):
+    start_time = datetime.datetime.now()
+    block_count = 0
+    
     while True:
-        x = datetime.datetime.now()
-        dtime = x.strftime("%m/%d/%Y-%H:%M:%S")
+        result = json.loads(requests.get(f"{host}/mine").text)
+        s = solve(result["last_hash"], minerID, max_value=result["max"])
+        result = json.loads(requests.post(f"{host}/solved", json=s).text)
+        
+        if os.name =="nt":
+            os.system("cls")
+      
+        # for linux / Mac OS
+        else:
+            os.system("clear")
+            
+        if result["success"] == "True":
+            block_count += 1
 
-        r = requests.get(f"{host}/mine")
-        result = json.loads(r.text)
-        last_hash = result["last_hash"]
-        max_value = result["max"]
+        current_time = datetime.datetime.now()
+        running_time = str(current_time - start_time)[:-7]
+        
+        print("--------------------------------------------")
+        print("Starch Industries Miner - Beta 1.1")
+        print("Created By: Abstract Potato")
+        print(f"Miner ID: {minerID}")
+        print("--------------------------------------------")
+        print("Start Time          | Runtime | New Blocks")
+        print(f"{start_time.strftime('%m/%d/%Y-%H:%M:%S')} | {running_time} | {block_count}")
+        print("--------------------------------------------")
 
-        s = solve(last_hash, minerID, max_value)
-
-        r = requests.post(f"{host}/solved", json=s)
-        result = json.loads(r.text)
-
-        print(f"{dtime} | {s['newHash']} | {result['success']}")
-
-        time.sleep(.0001)
+        time.sleep(.001)
 
 
 minerID = get_minerID()
 
 if minerID != "":
-
     while True:
         mine(minerID)
