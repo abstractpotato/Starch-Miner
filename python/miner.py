@@ -5,9 +5,12 @@ import time
 import datetime
 from hashlib import sha256
 
-host = "http://starch.one/api"
+host = "https://starch.one/api"
+
 
 def get_minerID():
+    print("Starch Industries Miner - Beta 1.1")
+    print("Created By: Abstract Potato")
     print("Enter Miner ID:")
     minerID = input().upper()
 
@@ -45,59 +48,32 @@ def solve(last_hash, minerID, max_value):
         value = int(new_hash, 16)
         
         if value < max_value:
-            x = datetime.datetime.now()
-            dtime = x.strftime("%m/%d/%Y-%H:%M:%S")
-            
-            print(dtime, new_hash)
             running = False
             return {"newHash": new_hash, "color": color, "minerID": minerID}
 
 
 def mine(minerID):
-    x = datetime.datetime.now()
-    dtime = x.strftime("%m/%d/%Y-%H:%M:%S")
-
-    r = requests.get(f"{host}/mine")
-    result = json.loads(r.text)
-    last_hash = result["last_hash"]
-    max_value = result["max"]
-    
-    temp_hash = last_hash
-    s = solve(last_hash, minerID, max_value)
-    
-    count = 0
-    
     while True:
-        count += 1
-        
         x = datetime.datetime.now()
         dtime = x.strftime("%m/%d/%Y-%H:%M:%S")
         
         r = requests.get(f"{host}/mine")
         result = json.loads(r.text)
-        
         last_hash = result["last_hash"]
         max_value = result["max"]
         
-        if temp_hash != last_hash:
-            temp_hash = last_hash
-            s = solve(last_hash, minerID, max_value)
-    
+        s = solve(last_hash, minerID, max_value)
+        
         r = requests.post(f"{host}/solved", json=s)
         result = json.loads(r.text)
-
-        if result["success"] == "True":
-            print(dtime, s, "Block Mined!", count)
         
-        time.sleep(.1)
+        print(f"{dtime} | {s['newHash']} | {result['success']}")
+        
+        time.sleep(.0001)
 
-
-print("Starch Industries Miner - Beta 1.0")
-print("Created By: Abstract Potato")
-print()
-
-minerID = get_minerID()
+        
+minerID = tools.get_minerID()
 
 if minerID != "":
     while True:
-        mine(minerID)
+        tools.mine(minerID)
