@@ -2,25 +2,55 @@ import os
 import random
 import requests
 import json
-import time
 import datetime
 from hashlib import sha256
 
 host = "https://starch.one/api"
+version = "beta v1.2.1"
 
 
-def get_minerID():
-    if os.name =="nt":
+def clear_console():
+    if os.name == "nt":
         os.system("cls")
-  
+
     # for linux / Mac OS
     else:
         os.system("clear")
-        
-    print("--------------------------------------------")
-    print("Starch Industries Miner - Beta 1.2")
-    print("Created By: Abstract Potato")
-    print("Enter Miner ID:")
+
+
+def fix_line(text):
+    while len(text) < 40:
+        text += " "
+    text += "│"
+    print(text)
+
+
+def print_head(is_closed=True):
+    print("┌───────────────────────────────────────┐")
+    fix_line(f"│ Starch Industries Miner - {version}")
+    fix_line("│ Created By: @abstractpotato")
+    if is_closed:
+        print("└───────────────────────────────────────┘")
+
+
+def print_status(start_time, running_time, block_count, newHash):
+    print_head(False)
+    print("├────────────┬──────────────────────────┤")
+    fix_line(
+        f"│ Running    │ {newHash[0:10]}...{newHash[-10:]}")
+    print("├────────────┼──────────────────────────┤")
+    fix_line(f"│ Start Time | {start_time.strftime('%m/%d/%Y-%H:%M:%S')}")
+    print("├────────────┼──────────────────────────┤")
+    fix_line(f"| Runtime    | {running_time}")
+    print("├────────────┼──────────────────────────┤")
+    fix_line(f"| New Blocks | {block_count}")
+    print("└────────────┴──────────────────────────┘")
+
+
+def get_minerID():
+    clear_console()
+    print_head()
+    print("> Enter Miner ID:")
     minerID = input().upper()
 
     # Clean input
@@ -61,38 +91,29 @@ def solve(last_hash, minerID, max_value):
             return {"newHash": new_hash, "color": color, "minerID": minerID}
 
 
+def attempt(minerID):
+    result = json.loads(requests.get(f"{host}/mine").text)
+    s = solve(result["last_hash"], minerID, max_value=result["max"])
+    result = json.loads(requests.post(f"{host}/solved", json=s).text)
+    return result, s
+
+
 def mine(minerID):
     start_time = datetime.datetime.now()
     block_count = 0
-    
+
     while True:
-        result = json.loads(requests.get(f"{host}/mine").text)
-        s = solve(result["last_hash"], minerID, max_value=result["max"])
-        result = json.loads(requests.post(f"{host}/solved", json=s).text)
-        
-        if os.name =="nt":
-            os.system("cls")
-      
-        # for linux / Mac OS
-        else:
-            os.system("clear")
-            
-        if result["success"] == "True":
+        result = attempt(minerID)
+        clear_console()
+
+        if result[0]["success"] == "True":
             block_count += 1
 
         current_time = datetime.datetime.now()
         running_time = str(current_time - start_time)[:-7]
-        
-        print("--------------------------------------------")
-        print("Starch Industries Miner - Beta 1.2")
-        print("Created By: Abstract Potato")
-        print(f"Miner ID: {minerID}")
-        print("--------------------------------------------")
-        print("Start Time          | Runtime | New Blocks")
-        print(f"{start_time.strftime('%m/%d/%Y-%H:%M:%S')} | {running_time} | {block_count}")
-        print("--------------------------------------------")
 
-        time.sleep(.001)
+        print_status(start_time, running_time,
+                     block_count, result[1]["newHash"])
 
 
 minerID = get_minerID()
