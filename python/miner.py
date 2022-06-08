@@ -10,7 +10,15 @@ host = "https://starch.one/api"
 
 
 def get_minerID():
-    print("Starch Industries Miner - Beta 1.1")
+    if os.name =="nt":
+        os.system("cls")
+  
+    # for linux / Mac OS
+    else:
+        os.system("clear")
+        
+    print("--------------------------------------------")
+    print("Starch Industries Miner - Beta 1.2")
     print("Created By: Abstract Potato")
     print("Enter Miner ID:")
     minerID = input().upper()
