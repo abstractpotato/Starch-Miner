@@ -6,7 +6,7 @@ import datetime
 from hashlib import sha256
 
 host = "https://starch.one/api"
-version = "beta v1.2.1"
+version = "beta v1.2.2"
 
 
 def clear_console():
@@ -33,11 +33,12 @@ def print_head(is_closed=True):
         print("└───────────────────────────────────────┘")
 
 
-def print_status(start_time, running_time, block_count, newHash):
+def print_status(minerID, start_time, running_time, block_count, newHash):
     print_head(False)
     print("├────────────┬──────────────────────────┤")
-    fix_line(
-        f"│ Running    │ {newHash[0:10]}...{newHash[-10:]}")
+    fix_line(f"│ Miner ID   │ {minerID}")
+    print("├────────────┼──────────────────────────┤")
+    fix_line(f"│ Running    │ {newHash[0:10]}...{newHash[-10:]}")
     print("├────────────┼──────────────────────────┤")
     fix_line(f"│ Start Time | {start_time.strftime('%m/%d/%Y-%H:%M:%S')}")
     print("├────────────┼──────────────────────────┤")
@@ -112,7 +113,7 @@ def mine(minerID):
         current_time = datetime.datetime.now()
         running_time = str(current_time - start_time)[:-7]
 
-        print_status(start_time, running_time,
+        print_status(minerID, start_time, running_time,
                      block_count, result[1]["newHash"])
 
 
