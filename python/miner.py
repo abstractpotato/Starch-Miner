@@ -76,7 +76,7 @@ def mine(minerID):
         running_time = str(current_time - start_time)[:-7]
         
         print("--------------------------------------------")
-        print("Starch Industries Miner - Beta 1.1")
+        print("Starch Industries Miner - Beta 1.2")
         print("Created By: Abstract Potato")
         print(f"Miner ID: {minerID}")
         print("--------------------------------------------")
